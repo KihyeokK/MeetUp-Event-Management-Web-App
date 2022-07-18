@@ -5,7 +5,7 @@ exports.getEvents = (req, res, next) => {
         place: "Metro Concordia",
         description: "Reunion for our friend group. There will be multiple activities prepared.",
         price: "0$",
-        place: "Metro Concordia",
-        imageFile: ""
+        location: "Metro Concordia",
+        imageUrl: ""
     });
   }

@@ -12,6 +12,6 @@ const eventsRoutes = require("./routes/events");
 const adminRoutes = require("./routes/admin");
 
 app.use(eventsRoutes);
-app.use(adminRoutes);
+app.use("/admin", adminRoutes);
 
 app.listen(3000);
