@@ -6,6 +6,6 @@ const adminController = require("../controllers/admin-controller");
 
 router.get('/create-event', adminController.getAddEvent);
 
-router.post('/create-event');
+router.post('/create-event', adminController.postAddEvent);
 
 module.exports = router;
