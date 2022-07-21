@@ -1,11 +1,13 @@
+const Event = require('../models/Event');
+
 exports.getEvents = (req, res, next) => {
-    res.render("events/index", {
-        title: "Reunion",
-        time: "April 5th 2022 10am",
-        place: "Metro Concordia",
-        description: "Reunion for our friend group. There will be multiple activities prepared.",
-        price: "0$",
-        location: "Metro Concordia",
-        imageUrl: ""
+  Event.find()
+    .then((events) => {
+      res.render("events/index", {
+        events: events,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }
+};
