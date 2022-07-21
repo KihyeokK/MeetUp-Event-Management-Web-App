@@ -2,10 +2,21 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const User = require("./models/User");
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
 const app = express();
+
+app.use((req, res, next) => {
+    //temporally getting user this way.
+    User.findById("62d89e3b73ccc2caf6294fe6")
+      .then((user) => {
+        req.user = user;
+        next();
+      })
+      .catch((err) => console.log(err));
+  });
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -19,6 +30,7 @@ const adminRoutes = require("./routes/admin");
 
 app.use(eventsRoutes);
 app.use("/admin", adminRoutes);
+
 
 mongoose
   .connect(MONGODB_URI)

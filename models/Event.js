@@ -45,4 +45,4 @@ const eventSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('User', eventSchema);
+module.exports = mongoose.model('Event', eventSchema);
