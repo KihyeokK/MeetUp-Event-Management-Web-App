@@ -2,6 +2,7 @@
 <body>
     <%- include('../includes/navigation.ejs') %>    
     <div class="container mt-4">
+        <h1>Created Events</h1>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <% for (let event of events) { %>
             <div class="col">
@@ -12,7 +13,7 @@
                         <h6 class="card-text text-muted"><%= event.eventDate %></h6>
                         <h6 class="card-text text-muted"><%= event.location %></h6>
                         <p class="card-text"><%= event.description %></p>
-                        <a href="#" class="btn btn-primary">Details</a>
+                        <a href="#" class="btn btn-primary">Edit</a>
                     </div>
                 </div>
             </div>
