@@ -29,9 +29,15 @@ exports.postAddEvent = (req, res, next) => {
     organizerUserId,
   });
   event
-    .save()
+    .save() //save returns saved event, but couldnt find its clarification from docs or internet.
+    //Though it is mentioned that the optional callback function in save() has save object value.
+    .then((event) => {
+      console.log(event);
+      req.user.createdEvents.push(event._id);
+      console.log(req.user);
+      return req.user.save();
+    })
     .then((result) => {
-      console.log(result);
       res.redirect("/");
     })
     .catch((err) => {

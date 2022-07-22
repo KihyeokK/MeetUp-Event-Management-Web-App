@@ -13,14 +13,15 @@ exports.getEvents = (req, res, next) => {
 };
 
 exports.getMyEvents = (req, res, next) => {
-  try {
-    const myEvents = req.user.createdEvents.slice(1);
-    //for now first element in myEvents array is an empty string.
-    //so ignore it for now.
-    res.render("events/my-events", {
-      events: myEvents,
+  req.user
+    .populate("createdEvents")
+    .then((user) => {
+      const myEvents = user.createdEvents;
+      res.render("events/my-events", {
+        events: myEvents,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  } catch (err) {
-    console.log(err);
-  }
 };
