@@ -12,6 +12,15 @@ exports.getEvents = (req, res, next) => {
     });
 };
 
+exports.getEventDetails = (req, res, next) => {
+  const eventId = req.params.eventId;
+  Event.findById(eventId).then((event) => {
+    res.render("events/event-details", {
+      event: event
+    });
+  });
+};
+
 exports.getMyEvents = (req, res, next) => {
   req.user
     .populate("createdEvents")

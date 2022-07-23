@@ -1,0 +1,24 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <%- include('../includes/navigation.ejs') %>    
+    <div class="container mt-4">
+        <div class="row row-cols-2">
+            <div class="col">
+                <div class="row">
+                    <%= event.title %>
+                </div>
+                <div class="row">
+                    <%= event.location %>
+                </div>
+                <div class="row">
+                    <%= event.description %>
+                </div>
+            </div>
+            <div class="col">
+                <a href="#" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>

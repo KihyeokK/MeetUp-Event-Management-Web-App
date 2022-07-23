@@ -6,7 +6,13 @@ const eventsController = require('../controllers/events-controller');
 
 router.get('/', eventsController.getEvents);
 
+router.get('/events', eventsController.getEvents);
+
 router.get('/my-events', eventsController.getMyEvents);
+
+//dynamic route for specific event details.
+router.get('/events/:eventId', eventsController.getEventDetails);
+
 
 module.exports = router;
 
