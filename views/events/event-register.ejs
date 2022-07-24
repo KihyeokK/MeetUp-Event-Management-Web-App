@@ -1,0 +1,21 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <div class="container">
+        <div class="card mx-auto mb-3 mt-5" style="max-width: 1000px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="/images/undraw_software_engineer_re_tnjc.svg" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title<"><%= event.title %></h5>
+                        <p class="card-text"><%= event.description %></p>
+                        <p class="card-text">price: $<%= event.price %></p>
+                        <a href="#" class="btn btn-primary">Confirm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

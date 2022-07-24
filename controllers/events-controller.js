@@ -14,11 +14,28 @@ exports.getEvents = (req, res, next) => {
 
 exports.getEventDetails = (req, res, next) => {
   const eventId = req.params.eventId;
-  Event.findById(eventId).then((event) => {
-    res.render("events/event-details", {
-      event: event
+  Event.findById(eventId)
+    .then((event) => {
+      res.render("events/event-details", {
+        event: event,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
+};
+
+exports.getEventRegister = (req, res, next) => {
+  const eventId = req.params.eventId;
+  Event.findById(eventId)
+    .then((event) => {
+      res.render("events/event-register", {
+        event: event,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getMyEvents = (req, res, next) => {

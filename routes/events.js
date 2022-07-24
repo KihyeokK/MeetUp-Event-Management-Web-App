@@ -13,6 +13,8 @@ router.get('/my-events', eventsController.getMyEvents);
 //dynamic route for specific event details.
 router.get('/events/:eventId', eventsController.getEventDetails);
 
+router.get('/events/:eventId/register', eventsController.getEventRegister);
+
 
 module.exports = router;
 

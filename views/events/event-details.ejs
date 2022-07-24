@@ -1,21 +1,42 @@
 <%- include('../includes/head.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>    
-    <div class="container mt-4">
-        <div class="row row-cols-2">
-            <div class="col">
-                <div class="row">
+    <div class="container mt-4 w-75">
+        <div class="card ">
+            <div class="card-body">
+                <img src="/images/undraw_buddies_i0fa.svg" class="card-img-top mt-4" alt="...">
+                <h2 class="card-title text-center mt-3">
                     <%= event.title %>
+                </h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row row-cols-2">
+                            <div class="col">
+                                <h5 class="text-center text-muted">
+                                    <%= event.location %>
+                                </h5>
+                                <p class="text-center text-muted">
+                                    <%= event.eventDate %>
+                                </p>
+                                <p class="card-text text-center">
+                                    <%= event.description %>
+                                </p>
+                            </div>
+                            <div class="col text-center">
+                                <a href="/events/<%= event._id %>/register" class="btn btn-primary mb-3">Register</a>
+                                <p class="card-text text-center">
+                                    Start time: <%= event.startTime %>
+                                </p>
+                                <p class="card-text text-center">
+                                    End time: <%= event.endTime %>
+                                </p>
+                                <p class="card-text text-center">
+                                    Event format: <%= event.eventFormat %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <%= event.location %>
-                </div>
-                <div class="row">
-                    <%= event.description %>
-                </div>
-            </div>
-            <div class="col">
-                <a href="#" class="btn btn-primary">Register</a>
             </div>
         </div>
     </div>
