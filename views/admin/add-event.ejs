@@ -6,22 +6,26 @@
             <div class="row g-4 py-2">
                 <div class="col-md-6">
                     <label for="eventTitle" class="form-label">Event Title</label>
-                    <input type="text" class="form-control" name="title" id="eventTitle" placeholder="Event Title" required>
+                    <input type="text" class="form-control" name="title" id="eventTitle" placeholder="Event Title" value="<% if (editMode) { %><%= event.title %><% } %>" required>
                 </div>
                 <div class="col-md-4">
                     <label for="eventOrganizer" class="form-label">Organizer Name</label>
-                    <input type="text" class="form-control" name="organizer" id="eventOrganizer" required>
+                    <input type="text" class="form-control" name="organizer" id="eventOrganizer" value="<% if (editMode) { %><%= event.organizer %><% } %>" required>
                 </div>
             </div>
             <div class="row g-4 py-2">
                 <div class="col-md-4">
                     <label for="eventLocation" class="form-label">Location</label>
-                    <input type="text" class="form-control" name="location" id="eventLocation" placeholder="Specify where the event takes place." required>
+                    <input type="text" class="form-control" name="location" id="eventLocation" placeholder="Specify where the event takes place." value="<% if (editMode) { %><%= event.location %><% } %>" required>
                 </div>
                 <div class="col-md-3">
                     <label for="eventFormat" class="form-label">Event Format</label>
                     <select class="form-select" name="eventFormat" id="eventFormat" required>
-                        <option selected disabled value="">Choose Event Format</option>
+                        <% if (editMode) { %>
+                            <option selected disabled value="<%= event.eventFormat %>"><% if (event.eventFormat === "inPerson" ) { %> In Person <% } else if (event.eventFormat === "online") { %> Online <% } else { %> To be determined <% } %> </option>
+                        <% } else { %>
+                            <option selected disabled value="">Choose Event Format</option>
+                        <% } %>
                         <option value="inPerson">In Person</option>
                         <option value="online">Online</option>
                         <option value="toBeDetermined">To be determined</option>
@@ -31,33 +35,36 @@
             <div class="row py-2">
                 <div class="col-md-4">
                     <label for="eventDate" class="mb-2">Date</label>
-                    <input type="date" class="form-control" name="eventDate" id="eventDate" required>
+                    <input type="date" class="form-control" name="eventDate" id="eventDate" value="<% if (editMode) { %><%= event.eventDate %><% } %>" required>
                 </div>
             </div>
             <div class="row g-4 py-2">
                 <div class="col-md-3">
                     <label for="eventStartTime" class="form-label">Start Time</label>
-                    <input type="time" class="form-control" name="startTime" id="eventStartTime" required>
+                    <input type="time" class="form-control" name="startTime" id="eventStartTime" value="<% if (editMode) { %><%= event.startTime %><% } %>" required>
                 </div>
                 <div class="col-md-3">
                     <label for="eventEndTime" class="form-label">End Time</label>
-                    <input type="time" class="form-control" name="endTime" id="eventEndTime" required>
+                    <input type="time" class="form-control" name="endTime" id="eventEndTime" value="<% if (editMode) { %><%= event.endTime %><% } %>" required>
                 </div>
             </div>
             <div class="row py-2">
                 <div class="col-md-3">
                     <label for="eventPrice" class="form-label">Event Price</label>
-                    <input type="number" min="0" step="0.01" class="form-control" name="price" id="eventPrice" required>
+                    <input type="number" min="0" step="0.01" class="form-control" name="price" id="eventPrice" value="<% if (editMode) { %><%= event.price %><% } %>" required>
                 </div>
             </div>
             <div class="row py-2">
                 <div class="col-md-6">
                     <label for="description" class="form-label">Description</label>
-                    <textarea name="description" class="form-control" id="description" rows="5" placeholder="Provide a detailed information about your event."></textarea>
+                    <textarea name="description" class="form-control" id="description" rows="5" placeholder="Provide a detailed information about your event."><% if (editMode) { %><%= event.description %><% } %></textarea>
                 </div>
             </div>
+            <% if (editMode) { %>
+                <input type="hidden" value="<%= event._id %>" name="eventId">
+            <% } %>
             <div class="col-12 py-2">
-                <button class="btn btn-primary" type="submit">Create Event</button>
+                <button class="btn btn-primary" type="submit"><% if (editMode) { %>Edit Event<% } else { %>Create Event<% } %></button>
             </div>
         </form>
     </div>

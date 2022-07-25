@@ -1,7 +1,9 @@
 const Event = require("../models/Event");
 
 exports.getAddEvent = (req, res, next) => {
-  res.render("admin/create-event");
+  res.render("admin/add-event", {
+    editMode: false,
+  });
 };
 
 exports.postAddEvent = (req, res, next) => {
@@ -44,3 +46,20 @@ exports.postAddEvent = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.getEditEvent = (req, res, next) => {
+  const eventId = req.params.eventId;
+  Event.findById(eventId)
+    .then((event) => {
+      console.log(eventId)
+      res.render("admin/add-event", {
+        event: event,
+        editMode: true
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
