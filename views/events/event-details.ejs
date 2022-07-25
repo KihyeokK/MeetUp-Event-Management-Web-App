@@ -1,6 +1,12 @@
 <%- include('../includes/head.ejs') %>
 <body>
-    <%- include('../includes/navigation.ejs') %>    
+    <%- include('../includes/navigation.ejs') %>
+    <% if (registerFailMessage) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= registerFailMessage %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
     <div class="container mt-4 w-75">
         <div class="card ">
             <div class="card-body">

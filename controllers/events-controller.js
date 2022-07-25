@@ -23,11 +23,21 @@ exports.getEvents = (req, res, next) => {
 
 exports.getEventDetails = (req, res, next) => {
   const eventId = req.params.eventId;
+  const registerFailMessage = req.query.registerfail;
+  console.log(registerFailMessage);
   Event.findById(eventId)
     .then((event) => {
-      res.render("events/event-details", {
-        event: event,
-      });
+      if (registerFailMessage) {
+        res.render("events/event-details", {
+          event: event,
+          registerFailMessage: registerFailMessage,
+        });
+      } else {
+        res.render("events/event-details", {
+          event: event,
+          registerFailMessage: false
+        });
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -51,7 +61,6 @@ exports.postEventRegister = (req, res, next) => {
   const eventId = req.body.eventId;
   console.log(eventId);
   if (!req.user.participatingEvents.includes(eventId)) {
-    console.log(req.user.participatingEvents);
     req.user.participatingEvents.push(eventId);
     req.user
       .save()
@@ -67,7 +76,7 @@ exports.postEventRegister = (req, res, next) => {
     const queryString = encodeURIComponent(
       "You are already registered to the event."
     );
-    res.redirect("/events/eventId/register?registerfail=" + queryString);
+    res.redirect(`/events/${eventId}?registerfail=` + queryString);
   }
 };
 
