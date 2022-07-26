@@ -34,7 +34,7 @@ exports.getEventDetails = (req, res, next) => {
       } else {
         res.render("events/event-details", {
           event: event,
-          registerFailMessage: false
+          registerFailMessage: false,
         });
       }
     })
@@ -58,8 +58,8 @@ exports.getEventRegister = (req, res, next) => {
 
 exports.postEventRegister = (req, res, next) => {
   const eventId = req.body.eventId;
-  if (!req.user.participatingEvents.includes(eventId)) {
-    req.user.participatingEvents.push(eventId);
+  if (!req.user.registeredEvents.includes(eventId)) {
+    req.user.registeredEvents.push(eventId);
     req.user
       .save()
       .then((result) => {
@@ -82,9 +82,16 @@ exports.getMyEvents = (req, res, next) => {
   req.user
     .populate("createdEvents")
     .then((user) => {
-      const myEvents = user.createdEvents;
+      //populating multiple fields
+      return user.populate("registeredEvents");
+    })
+    .then((user) => {
+      const createdEvents = user.createdEvents;
+      const registeredEvents = user.registeredEvents;
+      console.log(registeredEvents);
       res.render("events/my-events", {
-        events: myEvents,
+        createdEvents: createdEvents,
+        registeredEvents: registeredEvents,
       });
     })
     .catch((err) => {

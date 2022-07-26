@@ -4,7 +4,7 @@
     <div class="container mt-4">
         <h1>Created Events</h1>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <% for (let event of events) { %>
+            <% for (let event of createdEvents) { %>
             <div class="col">
                 <div class="card">
                     <img src="/images/undraw_buddies_i0fa.svg" class="card-img-top mt-4" alt="...">
@@ -14,6 +14,23 @@
                         <h6 class="card-text text-muted"><%= event.location %></h6>
                         <p class="card-text"><%= event.description %></p>
                         <a href="/admin/edit-event/<%= event._id %>" class="btn btn-primary">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <h1 class="mt-4">Registered Events</h1>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+            <% for (let event of registeredEvents) { %>
+            <div class="col">
+                <div class="card">
+                    <img src="/images/undraw_buddies_i0fa.svg" class="card-img-top mt-4" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= event.title %></h4>
+                        <h6 class="card-text text-muted"><%= event.eventDate %></h6>
+                        <h6 class="card-text text-muted"><%= event.location %></h6>
+                        <p class="card-text"><%= event.description %></p>
+                        <a href="#" class="btn btn-danger">Unregister</a>
                     </div>
                 </div>
             </div>

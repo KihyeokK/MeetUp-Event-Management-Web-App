@@ -10,6 +10,7 @@ const app = express();
 
 app.use((req, res, next) => {
     //temporally getting user this way.
+    //user created in MongoDB Compass for now.
     User.findById("62d89e3b73ccc2caf6294fe6")
       .then((user) => {
         req.user = user;
