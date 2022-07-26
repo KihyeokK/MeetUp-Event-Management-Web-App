@@ -7,16 +7,17 @@ exports.getAddEvent = (req, res, next) => {
 };
 
 exports.postAddEvent = (req, res, next) => {
-  console.log(req.body);
-  const title = req.body.title;
-  const organizer = req.body.organizer;
-  const location = req.body.location;
-  const eventFormat = req.body.eventFormat;
-  const eventDate = req.body.eventDate;
-  const startTime = req.body.startTime;
-  const endTime = req.body.endTime;
-  const price = req.body.price;
-  const description = req.body.description;
+  const {
+    title,
+    organizer,
+    location,
+    eventFormat,
+    eventDate,
+    startTime,
+    endTime,
+    price,
+    description,
+  } = req.body;
   const organizerUserId = req.user._id; //_id is automatically generated when creating user.
   const event = new Event({
     title,
@@ -51,10 +52,9 @@ exports.getEditEvent = (req, res, next) => {
   const eventId = req.params.eventId;
   Event.findById(eventId)
     .then((event) => {
-      console.log(eventId)
       res.render("admin/add-event", {
         event: event,
-        editMode: true
+        editMode: true,
       });
     })
     .catch((err) => {
@@ -62,4 +62,36 @@ exports.getEditEvent = (req, res, next) => {
     });
 };
 
-
+exports.postEditEvent = (req, res, next) => {
+  const {
+    eventId,
+    title,
+    organizer,
+    location,
+    eventFormat,
+    eventDate,
+    startTime,
+    endTime,
+    price,
+    description,
+  } = req.body;
+  Event.findById(eventId)
+    .then((event) => {
+      event.title = title;
+      event.organizer = organizer;
+      event.location = location;
+      event.eventFormat = eventFormat;
+      event.eventDate = eventDate;
+      event.startTime = startTime;
+      event.endTime = endTime;
+      event.price = price;
+      event.description = description;
+      return event.save();
+    })
+    .then((result) => {
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

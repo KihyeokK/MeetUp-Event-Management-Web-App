@@ -2,7 +2,7 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <div class="container w-75">
-        <form class="py-4" action="/admin/create-event" method="POST">
+        <form class="py-4" action="<% if (!editMode) { %>/admin/create-event<% } else { %>/admin/edit-event/event._id<% } %>" method="POST">
             <div class="row g-4 py-2">
                 <div class="col-md-6">
                     <label for="eventTitle" class="form-label">Event Title</label>
@@ -22,9 +22,9 @@
                     <label for="eventFormat" class="form-label">Event Format</label>
                     <select class="form-select" name="eventFormat" id="eventFormat" required>
                         <% if (editMode) { %>
-                            <option selected disabled value="<%= event.eventFormat %>"><% if (event.eventFormat === "inPerson" ) { %> In Person <% } else if (event.eventFormat === "online") { %> Online <% } else { %> To be determined <% } %> </option>
+                            <option selected value="<%= event.eventFormat %>"><% if (event.eventFormat === "inPerson" ) { %> In Person <% } else if (event.eventFormat === "online") { %> Online <% } else { %> To be determined <% } %> </option>
                         <% } else { %>
-                            <option selected disabled value="">Choose Event Format</option>
+                            <option selected value="">Choose Event Format</option>
                         <% } %>
                         <option value="inPerson">In Person</option>
                         <option value="online">Online</option>

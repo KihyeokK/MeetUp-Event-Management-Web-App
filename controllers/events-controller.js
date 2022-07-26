@@ -24,7 +24,6 @@ exports.getEvents = (req, res, next) => {
 exports.getEventDetails = (req, res, next) => {
   const eventId = req.params.eventId;
   const registerFailMessage = req.query.registerfail;
-  console.log(registerFailMessage);
   Event.findById(eventId)
     .then((event) => {
       if (registerFailMessage) {
@@ -59,7 +58,6 @@ exports.getEventRegister = (req, res, next) => {
 
 exports.postEventRegister = (req, res, next) => {
   const eventId = req.body.eventId;
-  console.log(eventId);
   if (!req.user.participatingEvents.includes(eventId)) {
     req.user.participatingEvents.push(eventId);
     req.user

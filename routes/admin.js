@@ -10,4 +10,6 @@ router.post('/create-event', adminController.postAddEvent);
 
 router.get('/edit-event/:eventId', adminController.getEditEvent);
 
+router.post('/edit-event/:eventId', adminController.postEditEvent);
+
 module.exports = router;
