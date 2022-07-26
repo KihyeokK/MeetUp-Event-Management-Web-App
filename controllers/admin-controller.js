@@ -95,3 +95,18 @@ exports.postEditEvent = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.postUnregisterEvent = (req, res, next) => {
+  const eventId = req.body.eventId;
+  let events = req.user.registeredEvents;
+  req.user.registeredEvents = events.filter((event) => event != eventId);
+  req.user
+    .save()
+    .then((result) => {
+      queryString = encodeURIComponent(true);
+      res.redirect("/my-events?unregistered=" + queryString);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

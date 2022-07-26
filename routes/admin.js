@@ -12,4 +12,6 @@ router.get('/edit-event/:eventId', adminController.getEditEvent);
 
 router.post('/edit-event/:eventId', adminController.postEditEvent);
 
+router.post('/unregister-event', adminController.postUnregisterEvent)
+
 module.exports = router;

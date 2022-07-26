@@ -4,10 +4,10 @@ exports.getEvents = (req, res, next) => {
   Event.find()
     .then((events) => {
       const alertMessage = req.query.registered;
-      if (req.query.registered) {
+      if (alertMessage) {
         res.render("events/index", {
           events: events,
-          registerSuccess: true,
+          registerSuccess: alertMessage,
         });
       } else {
         res.render("events/index", {
@@ -88,11 +88,20 @@ exports.getMyEvents = (req, res, next) => {
     .then((user) => {
       const createdEvents = user.createdEvents;
       const registeredEvents = user.registeredEvents;
-      console.log(registeredEvents);
-      res.render("events/my-events", {
-        createdEvents: createdEvents,
-        registeredEvents: registeredEvents,
-      });
+      const alertMessage = req.query.unregistered;
+      if (alertMessage) {
+        res.render("events/my-events", {
+            createdEvents: createdEvents,
+            registeredEvents: registeredEvents,
+            unregisterSuccess: alertMessage
+          });
+      } else {
+          res.render("events/my-events", {
+            createdEvents: createdEvents,
+            registeredEvents: registeredEvents,
+            unregisterSuccess: false
+          });
+      }
     })
     .catch((err) => {
       console.log(err);
