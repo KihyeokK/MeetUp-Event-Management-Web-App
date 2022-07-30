@@ -51,7 +51,10 @@
             <div class="row py-2">
                 <div class="col-md-3">
                     <label for="eventPrice" class="form-label">Event Price</label>
-                    <input type="number" min="0" step="0.01" class="form-control" name="price" id="eventPrice" value="<% if (editMode) { %><%= event.price %><% } %>" required>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" min="0" step="0.01" class="form-control" name="price" id="eventPrice" value="<% if (editMode) { %><%= event.price %><% } %>" required>
+                    </div>
                 </div>
             </div>
             <div class="row py-2">

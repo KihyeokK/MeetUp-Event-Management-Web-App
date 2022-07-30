@@ -28,10 +28,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const eventsRoutes = require("./routes/events");
 const adminRoutes = require("./routes/admin");
+const authRoutes = require("./routes/auth");
 
 app.use(eventsRoutes);
 app.use("/admin", adminRoutes);
-
+app.use(authRoutes);
 
 mongoose
   .connect(MONGODB_URI)

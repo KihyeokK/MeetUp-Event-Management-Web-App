@@ -72,7 +72,7 @@ exports.postEventRegister = (req, res, next) => {
       });
   } else {
     const queryString = encodeURIComponent(
-      "You are already registered to the event."
+      "You are already registered for the event."
     );
     res.redirect(`/events/${eventId}?registerfail=` + queryString);
   }

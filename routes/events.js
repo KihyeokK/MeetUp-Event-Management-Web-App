@@ -1,21 +1,20 @@
 const express = require('express');
-
-const router = express.Router();
-
 const eventsController = require('../controllers/events-controller');
 
-router.get('/', eventsController.getEvents);
+const userRouter = express.Router();
 
-router.get('/events', eventsController.getEvents);
+userRouter.get('/', eventsController.getEvents);
 
-router.get('/my-events', eventsController.getMyEvents);
+userRouter.get('/events', eventsController.getEvents);
+
+userRouter.get('/my-events', eventsController.getMyEvents);
 
 //dynamic route for specific event details.
-router.get('/events/:eventId', eventsController.getEventDetails);
+userRouter.get('/events/:eventId', eventsController.getEventDetails);
 
-router.get('/events/:eventId/register', eventsController.getEventRegister);
+userRouter.get('/events/:eventId/register', eventsController.getEventRegister);
 
-router.post('/events/:eventId/register', eventsController.postEventRegister);
+userRouter.post('/events/:eventId/register', eventsController.postEventRegister);
 
-module.exports = router;
+module.exports = userRouter;
 

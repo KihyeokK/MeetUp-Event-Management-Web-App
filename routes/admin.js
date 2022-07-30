@@ -1,17 +1,16 @@
 const express = require('express');
-
-const router = express.Router();
-
 const adminController = require("../controllers/admin-controller");
 
-router.get('/create-event', adminController.getAddEvent);
+const adminRouter = express.Router();
 
-router.post('/create-event', adminController.postAddEvent);
+adminRouter.get('/create-event', adminController.getAddEvent);
 
-router.get('/edit-event/:eventId', adminController.getEditEvent);
+adminRouter.post('/create-event', adminController.postAddEvent);
 
-router.post('/edit-event/:eventId', adminController.postEditEvent);
+adminRouter.get('/edit-event/:eventId', adminController.getEditEvent);
 
-router.post('/unregister-event', adminController.postUnregisterEvent)
+adminRouter.post('/edit-event/:eventId', adminController.postEditEvent);
 
-module.exports = router;
+adminRouter.post('/unregister-event', adminController.postUnregisterEvent)
+
+module.exports = adminRouter;
