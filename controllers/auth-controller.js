@@ -41,3 +41,31 @@ exports.postSignUp = (req, res, next) => {
 exports.getLogin = (req, res, next) => {
   res.render("auth/login");
 };
+
+exports.postLogin = (req, res, next) => {
+  const { email, password } = req.body;
+  User.findOne({ email: email }).then((user) => {
+    if (!user) {
+      //if user is not found
+      console.log("user with this email doesn't exist.");
+      return res.redirect("/login");
+    }
+    bcrypt
+      .compare(password, user.password)
+      .then((passwordMatch) => {
+        if (passwordMatch) {
+          // saves user in the session if password matches
+          req.session.user = user;
+          req.session.loggedIn = true;
+          res.redirect("/");
+        } else {
+          console.log("password doesn't match");
+          res.redirect("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.redirect("/login");
+      });
+  });
+};
