@@ -25,7 +25,7 @@ exports.postSignUp = (req, res, next) => {
             email: email,
             password: hashedPassword,
             createdEvents: [],
-            registeredEvents: []
+            registeredEvents: [],
           });
           return newUser.save();
         })
@@ -36,4 +36,8 @@ exports.postSignUp = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.getLogin = (req, res, next) => {
+  res.render("auth/login");
 };
