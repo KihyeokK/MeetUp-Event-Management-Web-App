@@ -36,10 +36,13 @@ app.use(
 app.use((req, res, next) => {
   if (!req.session.user) {
     // if user is not logged in
-    console.log("user not logged in so session.user doesn't exist");
+    console.log("user not logged in to session. user doesn't exist");
     next();
   } else {
+    console.log('getting user');
     // if user is logged in, get user info from database
+    // user is fetched in every request while the session is not destroyed(while user is logged in)
+    // so the existence of session decides if the user data can be fetched or not.
     User.findById(req.session.user._id)
       .then((user) => {
         req.user = user;

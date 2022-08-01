@@ -56,7 +56,7 @@ exports.postLogin = (req, res, next) => {
         if (passwordMatch) {
           // saves user in the session if password matches
           req.session.user = user;
-          req.session.loggedIn = true;
+          req.session.isLoggedIn = true;
           res.redirect("/");
         } else {
           console.log("password doesn't match");
@@ -69,3 +69,11 @@ exports.postLogin = (req, res, next) => {
       });
   });
 };
+
+exports.postLogout = (req, res, next) => {
+    req.session.destroy(err => {
+        console.log(err);
+        console.log("logged out");
+        res.redirect('/login');
+    })
+}
