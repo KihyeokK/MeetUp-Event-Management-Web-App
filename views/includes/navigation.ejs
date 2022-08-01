@@ -14,17 +14,20 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
+                <% if (!isAuthenticated) { %>
                 <li class="nav-item">
                     <a href="/login" class="nav-link">Login</a>
                 </li>
+                <li class="nav-item">
+                    <a href="/signup" class="nav-link">Signup</a>
+                </li>
+                <% } else { %>
                 <li class="nav-item">
                     <form action="/logout" method="POST">
                         <button class="nav-link border-0 link-like" type="submit">Logout</button>
                     </form>
                 </li>
-                <li class="nav-item">
-                    <a href="/signup" class="nav-link">Signup</a>
-                </li>
+                <% } %>
             </ul>
         </div>
     </div>

@@ -1,7 +1,11 @@
 const express = require('express');
 const adminController = require("../controllers/admin-controller");
+const isAuthMiddleware = require('../middleware/is-authenticated');
 
 const adminRouter = express.Router();
+
+// for route protection when user is not logged in.
+adminRouter.use(isAuthMiddleware);
 
 adminRouter.get('/create-event', adminController.getAddEvent);
 

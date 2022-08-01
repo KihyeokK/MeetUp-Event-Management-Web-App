@@ -52,6 +52,12 @@ app.use((req, res, next) => {
   }
 });
 
+// making variables available in the views rendered from requests
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  next();
+})
+
 const eventsRoutes = require("./routes/events");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
