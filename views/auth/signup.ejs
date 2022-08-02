@@ -4,6 +4,7 @@
     <main>
         <div class="container w-50">
             <form class="py-4" action="/signup" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="mb-3">
                     <label for="userName" class="form-label">Username</label>
                     <input type="text" class="form-control" id="userName" name="userName">

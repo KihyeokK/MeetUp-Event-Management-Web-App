@@ -13,6 +13,7 @@
                         <p class="card-text"><%= event.description %></p>
                         <p class="card-text">price: $<%= event.price %></p>
                         <form action="/events/<%= event._id %>/register" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <input type="hidden" value="<%= event._id %>" name="eventId">
                             <button type="submit" class="btn btn-primary">Confirm</button>
                         </form>

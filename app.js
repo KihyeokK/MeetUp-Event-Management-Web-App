@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const csrf = require('csurf');
 
 const User = require("./models/User");
 
@@ -14,7 +15,7 @@ const sessionStore = new MongoDBStore({
   uri: MONGODB_URI,
   collections: "sessions",
 });
-
+const csrfProtection = csrf(); // middlware for csrf protection
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -32,6 +33,8 @@ app.use(
     store: sessionStore,
   })
 );
+
+app.use(csrfProtection);
 
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -55,6 +58,7 @@ app.use((req, res, next) => {
 // making variables available in the views rendered from requests
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
   next();
 })
 
