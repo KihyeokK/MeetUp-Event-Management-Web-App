@@ -1,9 +1,10 @@
 const Event = require("../models/Event");
+const User = require("../models/User");
 
 exports.getAddEvent = (req, res, next) => {
   res.render("admin/add-event", {
     editMode: false,
-    firstName: req.user.firstName
+    firstName: req.user.firstName,
   });
 };
 
@@ -110,4 +111,20 @@ exports.postUnregisterEvent = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.postDeleteEvent = (req, res, next) => {
+  const eventId = req.body.eventId;
+  console.log(eventId);
+  // Event.findByIdAndDelete(eventId).then(result => {
+  //   // $unset will replace the event with null.
+  //   User.updateMany({registeredEvents: eventId}, { $unset: {"registeredEvents.$": ""}})
+  //   .then(result => {
+  //     res.redirect('/');
+  //   })
+  // })
+  Event.findById(eventId).then((event) => {
+    console.log(event);
+    res.redirect('/');
+  });
 };
