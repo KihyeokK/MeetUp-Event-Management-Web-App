@@ -1,4 +1,5 @@
 const Event = require("../models/Event");
+const User = require("../models/User");
 
 exports.getEvents = (req, res, next) => {
   Event.find()
@@ -26,17 +27,22 @@ exports.getEventDetails = (req, res, next) => {
   const registerFailMessage = req.query.registerfail;
   Event.findById(eventId)
     .then((event) => {
-      if (registerFailMessage) {
-        res.render("events/event-details", {
-          event: event,
-          registerFailMessage: registerFailMessage,
-        });
-      } else {
-        res.render("events/event-details", {
-          event: event,
-          registerFailMessage: false,
-        });
-      }
+      const userId = event.organizerUserId;
+      User.findById(userId).then((user) => {
+        if (registerFailMessage) {
+          res.render("events/event-details", {
+            event: event,
+            registerFailMessage: registerFailMessage,
+            organizerUserName: user.userName,
+          });
+        } else {
+          res.render("events/event-details", {
+            event: event,
+            registerFailMessage: false,
+            organizerUserName: user.userName,
+          });
+        }
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -91,16 +97,16 @@ exports.getMyEvents = (req, res, next) => {
       const alertMessage = req.query.unregistered;
       if (alertMessage) {
         res.render("events/my-events", {
-            createdEvents: createdEvents,
-            registeredEvents: registeredEvents,
-            unregisterSuccess: alertMessage
-          });
+          createdEvents: createdEvents,
+          registeredEvents: registeredEvents,
+          unregisterSuccess: alertMessage,
+        });
       } else {
-          res.render("events/my-events", {
-            createdEvents: createdEvents,
-            registeredEvents: registeredEvents,
-            unregisterSuccess: false
-          });
+        res.render("events/my-events", {
+          createdEvents: createdEvents,
+          registeredEvents: registeredEvents,
+          unregisterSuccess: false,
+        });
       }
     })
     .catch((err) => {

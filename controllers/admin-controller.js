@@ -3,6 +3,7 @@ const Event = require("../models/Event");
 exports.getAddEvent = (req, res, next) => {
   res.render("admin/add-event", {
     editMode: false,
+    firstName: req.user.firstName
   });
 };
 

@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="eventOrganizer" class="form-label">Organizer Name</label>
-                    <input type="text" class="form-control" name="organizer" id="eventOrganizer" value="<% if (editMode) { %><%= event.organizer %><% } %>" required>
+                    <input type="text" class="form-control" name="organizer" id="eventOrganizer" value="<% if (editMode) { %><%= event.organizer %><% } else { %><%= firstName %><% } %>" required>
                 </div>
             </div>
             <div class="row g-4 py-2">

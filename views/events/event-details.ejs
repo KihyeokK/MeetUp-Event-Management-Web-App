@@ -27,6 +27,9 @@
                                 <p class="card-text text-center">
                                     <%= event.description %>
                                 </p>
+                                <p class="text-center">
+                                    This event is created by @<span class="fw-bold"><%= organizerUserName %></span>.
+                                </p>
                             </div>
                             <div class="col text-center">
                                 <a href="/events/<%= event._id %>/register" class="btn btn-primary mb-3">Register</a>

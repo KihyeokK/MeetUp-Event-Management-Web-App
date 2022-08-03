@@ -20,6 +20,11 @@
                         <h6 class="card-text text-muted"><%= event.location %></h6>
                         <p class="card-text"><%= event.description %></p>
                         <a href="/admin/edit-event/<%= event._id %>" class="btn btn-primary">Edit</a>
+                        <form action="/admin/unregister-event" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" value="<%= event._id%>" name="eventId">
+                            <button type="submit" class="btn btn-danger">Delete Event</button>
+                        </form>
                     </div>
                 </div>
             </div>
