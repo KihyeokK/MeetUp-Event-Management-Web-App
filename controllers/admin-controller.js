@@ -116,15 +116,48 @@ exports.postUnregisterEvent = (req, res, next) => {
 exports.postDeleteEvent = (req, res, next) => {
   const eventId = req.body.eventId;
   console.log(eventId);
-  // Event.findByIdAndDelete(eventId).then(result => {
-  //   // $unset will replace the event with null.
-  //   User.updateMany({registeredEvents: eventId}, { $unset: {"registeredEvents.$": ""}})
-  //   .then(result => {
-  //     res.redirect('/');
-  //   })
-  // })
-  Event.findById(eventId).then((event) => {
-    console.log(event);
-    res.redirect('/');
+  // User.find({ registeredEvents: eventId })
+  //     .then((users) => {
+  //       console.log("deleting");
+  //       let registeredEvents; // here
+  //       users.forEach((user) => {
+  //         registeredEvents = user.registeredEvents.filter((event) => {
+  //           return event.toString() !== eventId.toString(); //deleting event
+  //         });
+  //         console.log(registeredEvents);
+  //         // user.registeredEvents = registeredEvents; //update registered events 
+  //       });
+  //       res.redirect('/my-events');
+  //     })
+  Event.findByIdAndDelete(eventId).then((result) => {
+    User.find({ registeredEvents: eventId })
+      .then((users) => {
+        console.log("deleting");
+        return users.forEach((user) => {
+          let registeredEvents = user.registeredEvents.filter((event) => {
+            return event.toString() !== eventId.toString(); //deleting event
+          });
+          console.log(registeredEvents);
+          user.registeredEvents = registeredEvents; //update registered events 
+          user.save();
+        });
+      })
+      .then((result) => {
+        let createdEvents = req.user.createdEvents.filter((event) => {
+          return event.toString() !== eventId.toString();
+        });
+        console.log("deleting event in createdEvents",createdEvents);
+        req.user.createdEvents = createdEvents;
+        console.log(req.user);
+        return req.user.save();
+      })
+      .then((result) => {
+        res.redirect("/my-events");
+      });
   });
+  // $unset will replace the event with null.
+  // return User.updateMany(
+  //   { registeredEvents: eventId },
+  //   { $unset: { "registeredEvents.$": "" } }
+  // )
 };
