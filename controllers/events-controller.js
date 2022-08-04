@@ -2,7 +2,6 @@ const Event = require("../models/Event");
 const User = require("../models/User");
 
 exports.getEvents = (req, res, next) => {
-  console.log(req.user.createdEvents);
   Event.find()
     .then((events) => {
       const alertMessage = req.query.registered;
