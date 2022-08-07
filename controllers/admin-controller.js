@@ -43,7 +43,8 @@ exports.postAddEvent = (req, res, next) => {
       return req.user.save();
     })
     .then((result) => {
-      res.redirect("/");
+      req.flash("successMessage", "Successfully created the event!")
+      res.redirect("/my-events");
     })
     .catch((err) => {
       console.log(err);
@@ -105,8 +106,8 @@ exports.postUnregisterEvent = (req, res, next) => {
   req.user
     .save()
     .then((result) => {
-      queryString = encodeURIComponent(true);
-      res.redirect("/my-events?unregistered=" + queryString);
+      req.flash("successMessage", "Succesfully unregistered from the event!");
+      res.redirect("/my-events");
     })
     .catch((err) => {
       console.log(err);
@@ -121,15 +122,16 @@ exports.postDeleteEvent = (req, res, next) => {
       .then((users) => {
         console.log("deleting", users);
         return users.forEach((user) => {
-          let registeredEvents = user.registeredEvents.filter((event) => {
+          const registeredEvents = user.registeredEvents.filter((event) => {
             return event.toString() !== eventId.toString(); //deleting event
           });
           console.log(registeredEvents);
           user.registeredEvents = registeredEvents; //update registered events
-          if (user._id.toString() == req.user._id.toString()) { // if user is the currently logged in user
-            let createdEvents = user.createdEvents.filter((event) => {
-              return event.toString() !== eventId.toString();
-            });
+          if (user._id.toString() == req.user._id.toString()) {
+            // if user is the currently logged in user
+            const createdEvents = user.createdEvents.filter(
+              (event) => event.toString() !== eventId.toString()
+            );
             console.log("deleting event in createdEvents", createdEvents);
             user.createdEvents = createdEvents;
             console.log(user);
@@ -138,6 +140,7 @@ exports.postDeleteEvent = (req, res, next) => {
         });
       })
       .then((result) => {
+        req.flash("successMessage", "Successfully deleted the event!");
         res.redirect("/my-events");
       });
   });

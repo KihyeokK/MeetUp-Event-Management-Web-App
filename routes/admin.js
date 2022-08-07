@@ -11,12 +11,12 @@ adminRouter.get('/create-event', adminController.getAddEvent);
 
 adminRouter.post('/create-event', adminController.postAddEvent);
 
-adminRouter.get('/edit-event/:eventId', adminController.getEditEvent);
-
-adminRouter.post('/edit-event/:eventId', adminController.postEditEvent);
-
 adminRouter.post('/unregister-event', adminController.postUnregisterEvent);
 
 adminRouter.post('/delete-event', adminController.postDeleteEvent);
+
+adminRouter.get('/edit-event/:eventId', adminController.getEditEvent);
+
+adminRouter.post('/edit-event/:eventId', adminController.postEditEvent);
 
 module.exports = adminRouter;

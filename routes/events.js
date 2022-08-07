@@ -10,12 +10,11 @@ userRouter.get('/events', eventsController.getEvents);
 
 userRouter.get('/my-events', isAuthMiddleware, eventsController.getMyEvents);
 
-//dynamic route for specific event details.
-userRouter.get('/events/:eventId', eventsController.getEventDetails);
+userRouter.post('/events/:eventId/register', isAuthMiddleware, eventsController.postEventRegister);
 
 userRouter.get('/events/:eventId/register', isAuthMiddleware, eventsController.getEventRegister);
 
-userRouter.post('/events/:eventId/register', isAuthMiddleware, eventsController.postEventRegister);
+userRouter.get('/events/:eventId', eventsController.getEventDetails);
 
 module.exports = userRouter;
 
