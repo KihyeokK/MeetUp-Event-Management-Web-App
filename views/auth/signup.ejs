@@ -1,6 +1,12 @@
 <%- include('../includes/head.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>
+    <% if (alertMessage) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= alertMessage %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
     <main>
         <div class="container w-50">
             <form class="py-4" action="/signup" method="POST">

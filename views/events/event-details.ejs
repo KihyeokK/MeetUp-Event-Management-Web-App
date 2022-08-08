@@ -2,53 +2,83 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <% if (alertMessage) { %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <%= alertMessage %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= alertMessage %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <% } %>
-    <div class="container mt-4 w-75">
-        <div class="card ">
-            <div class="card-body">
-                <img src="/images/undraw_buddies_i0fa.svg" class="card-img-top mt-4" alt="...">
-                <h2 class="card-title text-center mt-3">
-                    <%= event.title %>
-                </h2>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row row-cols-2">
-                            <div class="col">
-                                <h5 class="text-center text-muted">
-                                    <%= event.location %>
-                                </h5>
-                                <p class="text-center text-muted">
-                                    <%= event.eventDate %>
-                                </p>
-                                <p class="card-text text-center">
-                                    <%= event.description %>
-                                </p>
-                                <p class="text-center">
-                                    This event is created by @<span class="fw-bold"><%= organizerUserName %></span>.
-                                </p>
+    <main>
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Invite a person to this event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/send-invitation" method="POST">
+                            <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                            <input type="hidden" value="<%= event._id %>" name="eventId">
+                            <div class="mb-3">
+                              <label for="email" class="form-label">Email address</label>
+                              <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                              <div id="emailHelp" class="form-text">Specify the email address to which you will send invitation.</div>
                             </div>
-                            <div class="col text-center">
-                                <a href="/events/<%= event._id %>/register" class="btn btn-primary mb-3">Register</a>
-                                <p class="card-text text-center">
-                                    Start time: <%= event.startTime %>
-                                </p>
-                                <p class="card-text text-center">
-                                    End time: <%= event.endTime %>
-                                </p>
-                                <p class="card-text text-center">
-                                    Event format: <%= event.eventFormat %>
-                                </p>
+                            <div class="mb-3">
+                              <label for="message" class="form-label">Optional message</label>
+                              <textarea class="form-control" id="message" name="message"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="sumbit" class="btn btn-primary">Send Invitation</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4 w-75">
+            <div class="card">
+                <div class="card-body">
+                    <img src="/images/undraw_buddies_i0fa.svg" class="card-img-top mt-4" alt="...">
+                    <h2 class="card-title text-center mt-3">
+                        <%= event.title %>
+                    </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row row-cols-2">
+                                <div class="col">
+                                    <h5 class="text-center text-muted">
+                                        <%= event.location %>
+                                    </h5>
+                                    <p class="text-center text-muted">
+                                        <%= event.eventDate %>
+                                    </p>
+                                    <p class="card-text text-center">
+                                        <%= event.description %>
+                                    </p>
+                                    <p class="text-center">
+                                        This event is created by @<span class="fw-bold"><%= organizerUserName %></span>.
+                                    </p>
+                                </div>
+                                <div class="col text-center">
+                                    <a href="/events/<%= event._id %>/register" class="btn btn-primary">Register</a>
+                                    <button type="button" class="btn btn-primary" id="modalBtn" data-bs-toggle="modal" data-bs-target="#modal">Invite</button>
+                                    <p class="card-text text-center">
+                                        Start time: <%= event.startTime %>
+                                    </p>
+                                    <p class="card-text text-center">
+                                        End time: <%= event.endTime %>
+                                    </p>
+                                    <p class="card-text text-center">
+                                        Event format: <%= event.eventFormat %>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>

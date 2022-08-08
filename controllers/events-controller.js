@@ -1,7 +1,17 @@
+const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+
 const Event = require("../models/Event");
 const User = require("../models/User");
 
-const mongoose = require("mongoose");
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
 
 exports.getEvents = (req, res, next) => {
   Event.find()
@@ -91,26 +101,55 @@ exports.getMyEvents = (req, res, next) => {
       const registeredEvents = user.registeredEvents;
       const alertMessage = req.flash("alertMessage")[0];
       console.log(alertMessage);
-      let successMessage = req.flash("successMessage")[0];
+      const successMessage = req.flash("successMessage")[0];
       console.log(successMessage);
-      
+
       if (alertMessage) {
-        console.log('alert', alertMessage);
+        console.log("alert", alertMessage);
         res.render("events/my-events", {
           createdEvents: createdEvents,
           registeredEvents: registeredEvents,
           alertMessage: alertMessage,
-          successMessage: false
+          successMessage: false,
         });
       } else {
-        console.log('success', successMessage);
+        console.log("success", successMessage);
         res.render("events/my-events", {
           createdEvents: createdEvents,
           registeredEvents: registeredEvents,
           alertMessage: false,
-          successMessage: successMessage
+          successMessage: successMessage,
         });
       }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.postSendInvitation = (req, res, next) => {
+  const email = req.body.email;
+  const message = req.body.message;
+  const eventId = req.body.eventId;
+  console.log("sending email");
+  console.log(process.env.EMAIL, process.env.PASSWORD);
+  Event.findById(eventId)
+    .then((event) => {
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: `Event Invitation from ${req.user.firstName} ${req.user.lastName}`,
+        html: `<h1>User ${req.user.userName} (${req.user.firstName} ${req.user.lastName}) invites you to the following event: ${event.title}</h1>
+        <div> Message: ${message ? `${message}` : 'No message was attached to this email.' }</div>
+        <a href=/events/${eventId}></a>`
+      };
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      })
     })
     .catch((err) => {
       console.log(err);

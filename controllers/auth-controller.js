@@ -2,7 +2,8 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 exports.getSignUp = (req, res, next) => {
-  res.render("auth/signup");
+  alertMessage = req.flash("alertMessage")[0];
+  res.render("auth/signup", { alertMessage: alertMessage });
 };
 
 exports.postSignUp = (req, res, next) => {
@@ -13,6 +14,7 @@ exports.postSignUp = (req, res, next) => {
     .then((user) => {
       //if user with the email already exists.
       if (user) {
+        req.flash("alertMessage", "User with this E-mail exists already.");
         return res.redirect("/signup");
       }
       return bcrypt
@@ -71,9 +73,9 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.postLogout = (req, res, next) => {
-    req.session.destroy(err => {
-        console.log(err);
-        console.log("logged out");
-        res.redirect('/login');
-    })
-}
+  req.session.destroy((err) => {
+    console.log(err);
+    console.log("logged out");
+    res.redirect("/login");
+  });
+};

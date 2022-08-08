@@ -1,26 +1,28 @@
 <%- include('../includes/head.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <div class="container">
-        <div class="card mx-auto mb-3 mt-5" style="max-width: 1000px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="/images/undraw_software_engineer_re_tnjc.svg" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title<"><%= event.title %></h5>
-                        <p class="card-text"><%= event.description %></p>
-                        <p class="card-text">price: $<%= event.price %></p>
-                        <form action="/events/<%= event._id %>/register" method="POST">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <input type="hidden" value="<%= event._id %>" name="eventId">
-                            <button type="submit" class="btn btn-primary">Confirm</button>
-                        </form>
+    <main>
+        <div class="container">
+            <div class="card mx-auto mb-3 mt-5" style="max-width: 1000px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/images/undraw_software_engineer_re_tnjc.svg" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title<"><%= event.title %></h5>
+                            <p class="card-text"><%= event.description %></p>
+                            <p class="card-text">price: $<%= event.price %></p>
+                            <form action="/events/<%= event._id %>/register" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" value="<%= event._id %>" name="eventId">
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>

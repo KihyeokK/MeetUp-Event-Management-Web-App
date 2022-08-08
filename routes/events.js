@@ -2,19 +2,21 @@ const express = require('express');
 const eventsController = require('../controllers/events-controller');
 const isAuthMiddleware = require('../middleware/is-authenticated');
 
-const userRouter = express.Router();
+const eventsRouter = express.Router();
 
-userRouter.get('/', eventsController.getEvents);
+eventsRouter.get('/', eventsController.getEvents);
 
-userRouter.get('/events', eventsController.getEvents);
+eventsRouter.get('/events', eventsController.getEvents);
 
-userRouter.get('/my-events', isAuthMiddleware, eventsController.getMyEvents);
+eventsRouter.get('/my-events', isAuthMiddleware, eventsController.getMyEvents);
 
-userRouter.post('/events/:eventId/register', isAuthMiddleware, eventsController.postEventRegister);
+eventsRouter.post('/send-invitation', eventsController.postSendInvitation);
 
-userRouter.get('/events/:eventId/register', isAuthMiddleware, eventsController.getEventRegister);
+eventsRouter.post('/events/:eventId/register', isAuthMiddleware, eventsController.postEventRegister);
 
-userRouter.get('/events/:eventId', eventsController.getEventDetails);
+eventsRouter.get('/events/:eventId/register', isAuthMiddleware, eventsController.getEventRegister);
 
-module.exports = userRouter;
+eventsRouter.get('/events/:eventId', isAuthMiddleware, eventsController.getEventDetails);
+
+module.exports = eventsRouter;
 
