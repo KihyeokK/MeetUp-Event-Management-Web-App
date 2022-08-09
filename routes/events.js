@@ -10,13 +10,13 @@ eventsRouter.get('/events', eventsController.getEvents);
 
 eventsRouter.get('/my-events', isAuthMiddleware, eventsController.getMyEvents);
 
-eventsRouter.post('/send-invitation', eventsController.postSendInvitation);
+eventsRouter.post('/send-invitation', isAuthMiddleware, eventsController.postSendInvitation);
 
 eventsRouter.post('/events/:eventId/register', isAuthMiddleware, eventsController.postEventRegister);
 
 eventsRouter.get('/events/:eventId/register', isAuthMiddleware, eventsController.getEventRegister);
 
-eventsRouter.get('/events/:eventId', isAuthMiddleware, eventsController.getEventDetails);
+eventsRouter.get('/events/:eventId', eventsController.getEventDetails);
 
 module.exports = eventsRouter;
 

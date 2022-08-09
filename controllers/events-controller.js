@@ -1,17 +1,10 @@
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
+const nodemailerSendgrid = require("nodemailer-sendgrid");
 require("dotenv").config();
 
 const Event = require("../models/Event");
 const User = require("../models/User");
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-  },
-});
 
 exports.getEvents = (req, res, next) => {
   Event.find()
@@ -128,6 +121,11 @@ exports.getMyEvents = (req, res, next) => {
 };
 
 exports.postSendInvitation = (req, res, next) => {
+  const transporter = nodemailer.createTransport(
+    nodemailerSendgrid({
+      apiKey: process.env.API_KEY,
+    })
+  );
   const email = req.body.email;
   const message = req.body.message;
   const eventId = req.body.eventId;
@@ -139,17 +137,22 @@ exports.postSendInvitation = (req, res, next) => {
         from: process.env.EMAIL,
         to: email,
         subject: `Event Invitation from ${req.user.firstName} ${req.user.lastName}`,
-        html: `<h1>User ${req.user.userName} (${req.user.firstName} ${req.user.lastName}) invites you to the following event: ${event.title}</h1>
-        <div> Message: ${message ? `${message}` : 'No message was attached to this email.' }</div>
-        <a href=/events/${eventId}></a>`
+        html: `<h1>User ${req.user.userName} (${req.user.firstName} ${
+          req.user.lastName
+        }) invites you to the following event: ${event.title}</h1>
+        <a href="http://localhost:3000/events/${eventId}">Link</a>
+        <div> Message: ${
+          message ? `${message}` : "No message was attached to this email."
+        }</div>`,
       };
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
           console.log(err);
         } else {
-          console.log('Email sent: ' + info.response);
+          console.log("Email sent: " + info.response);
         }
-      })
+      });
+      res.redirect('/');
     })
     .catch((err) => {
       console.log(err);
