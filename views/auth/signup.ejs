@@ -1,11 +1,13 @@
 <%- include('../includes/head.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <% if (alertMessage) { %>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <%= alertMessage %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <% if (alertMessages.length) { %>
+        <% for (let alertMessage of alertMessages) { %>
+            <div class="alert alert-danger alert-dismissible fade show mt-0 mb-0" role="alert">
+                <%= alertMessage %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>    
     <% } %>
     <main>
         <div class="container w-50">
@@ -13,29 +15,31 @@
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="mb-3">
                     <label for="userName" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="userName" name="userName">
+                    <input type="text" class="form-control" id="userName" name="userName" aria-describedby="userNameHelp" required>
+                    <div id="userNameHelp" class="form-text">Username should only contain numbers and alphabets.</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName">
+                        <input type="text" class="form-control" id="firstName" name="firstName" required>
                     </div>
                     <div class="col-md-6">
                         <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName"> 
+                        <input type="text" class="form-control" id="lastName" name="lastName" required> 
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password" aria-describedby="pwdHelp" required>
+                    <div id="pwdHelp" class="form-text">Password should contain at least 6 characters and at most 15 characters.</div>
                 </div>
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                 </div>
                 <button class="btn btn-primary" type="submit">Sign Up</button>
             </form>

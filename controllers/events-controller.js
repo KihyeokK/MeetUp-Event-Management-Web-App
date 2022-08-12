@@ -123,7 +123,7 @@ exports.getMyEvents = (req, res, next) => {
 exports.postSendInvitation = (req, res, next) => {
   const transporter = nodemailer.createTransport(
     nodemailerSendgrid({
-      apiKey: process.env.API_KEY,
+      apiKey: process.env.SENDGRID_API_KEY,
     })
   );
   const email = req.body.email;
