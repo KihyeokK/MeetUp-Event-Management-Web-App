@@ -10,6 +10,7 @@ exports.getEvents = (req, res, next) => {
   Event.find()
     .then((events) => {
       res.render("events/index", {
+        pageTitle: "Events",
         events: events,
       });
     })
@@ -30,12 +31,14 @@ exports.getEventDetails = (req, res, next) => {
       User.findById(userId).then((user) => {
         if (alertMessage) {
           res.render("events/event-details", {
+            pageTitle: "Event Details",
             event: event,
             alertMessage: alertMessage,
             organizerUserName: user.userName,
           });
         } else {
           res.render("events/event-details", {
+            pageTitle: "Event Details",
             event: event,
             alertMessage: false,
             organizerUserName: user.userName,
@@ -53,6 +56,7 @@ exports.getEventRegister = (req, res, next) => {
   Event.findById(eventId)
     .then((event) => {
       res.render("events/event-register", {
+        pageTitle: "Register Event",
         event: event,
       });
     })
@@ -100,6 +104,7 @@ exports.getMyEvents = (req, res, next) => {
       if (alertMessage) {
         console.log("alert", alertMessage);
         res.render("events/my-events", {
+          pageTitle: "My Events",
           createdEvents: createdEvents,
           registeredEvents: registeredEvents,
           alertMessage: alertMessage,
@@ -108,6 +113,7 @@ exports.getMyEvents = (req, res, next) => {
       } else {
         console.log("success", successMessage);
         res.render("events/my-events", {
+          pageTitle: "My Events",
           createdEvents: createdEvents,
           registeredEvents: registeredEvents,
           alertMessage: false,

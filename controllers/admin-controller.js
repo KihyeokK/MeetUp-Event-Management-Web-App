@@ -3,6 +3,7 @@ const User = require("../models/User");
 
 exports.getAddEvent = (req, res, next) => {
   res.render("admin/add-event", {
+    pageTitle: "Add Event",
     editMode: false,
     firstName: req.user.firstName,
   });
@@ -56,6 +57,7 @@ exports.getEditEvent = (req, res, next) => {
   Event.findById(eventId)
     .then((event) => {
       res.render("admin/add-event", {
+        pageTitle: "Edit Event",
         event: event,
         editMode: true,
       });

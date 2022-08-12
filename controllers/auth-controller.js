@@ -4,7 +4,7 @@ const { validationResult } = require("express-validator");
 
 exports.getSignUp = (req, res, next) => {
   alertMessages = req.flash("alertMessage");
-  res.render("auth/signup", { alertMessages: alertMessages });
+  res.render("auth/signup", { pageTitle: "Signup", alertMessages: alertMessages });
 };
 
 exports.postSignUp = (req, res, next) => {
@@ -20,7 +20,7 @@ exports.postSignUp = (req, res, next) => {
     console.log(alertMessages);
     return res
       .status(422)
-      .render("auth/signup", { alertMessages: alertMessages });
+      .render("auth/signup", { pageTitle: "Signup", alertMessages: alertMessages });
   }
   console.log("signing up,", req.body);
   bcrypt
@@ -46,8 +46,9 @@ exports.postSignUp = (req, res, next) => {
 };
 
 exports.getLogin = (req, res, next) => {
+  const infoMessage = req.flash("infoMessage")[0];
   const alertMessages = req.flash("alertMessages");
-  res.render("auth/login", { alertMessages: alertMessages });
+  res.render("auth/login", { pageTitle: "Login", infoMessage: infoMessage, alertMessages: alertMessages });
 };
 
 exports.postLogin = (req, res, next) => {
@@ -62,7 +63,7 @@ exports.postLogin = (req, res, next) => {
     console.log(alertMessages);
     return res
       .status(422)
-      .render("auth/login", { alertMessages: alertMessages });
+      .render("auth/login", { pageTitle: "Login", infoMessage: false, alertMessages: alertMessages });
   }
   User.findOne({ email: email }).then((user) => {
     if (!user) {

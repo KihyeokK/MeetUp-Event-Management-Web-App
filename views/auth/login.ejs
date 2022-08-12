@@ -1,6 +1,12 @@
 <%- include('../includes/head.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>
+    <% if (infoMessage) { %>
+        <div class="alert alert-warning alert-dismissible fade show mt-0 mb-0" role="alert">
+            <%= infoMessage %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
     <% if (alertMessages.length) { %>
         <% for (let alertMessage of alertMessages) { %>
             <div class="alert alert-danger alert-dismissible fade show mt-0 mb-0" role="alert">
@@ -11,7 +17,7 @@
     <% } %>
     <main>
         <div class="container w-50">
-            <form class="py-4" action="/login" method="POST">
+            <form class="pt-4 pb-3" action="/login" method="POST">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
@@ -23,6 +29,7 @@
                 </div>
                 <button class="btn btn-primary" type="submit">Login</button>
             </form>
+            <a class="btn btn-secondary me-2" href="/signup">Sign Up</a><span>Not a user yet? Sign up here!</span>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
