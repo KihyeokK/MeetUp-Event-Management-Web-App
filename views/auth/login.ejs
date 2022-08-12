@@ -1,6 +1,14 @@
 <%- include('../includes/head.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>
+    <% if (alertMessages.length) { %>
+        <% for (let alertMessage of alertMessages) { %>
+            <div class="alert alert-danger alert-dismissible fade show mt-0 mb-0" role="alert">
+                <%= alertMessage %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>    
+    <% } %>
     <main>
         <div class="container w-50">
             <form class="py-4" action="/login" method="POST">

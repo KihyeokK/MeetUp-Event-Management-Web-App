@@ -46,15 +46,29 @@ exports.postSignUp = (req, res, next) => {
 };
 
 exports.getLogin = (req, res, next) => {
-  res.render("auth/login");
+  const alertMessages = req.flash("alertMessages");
+  res.render("auth/login", { alertMessages: alertMessages });
 };
 
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body;
+  const errors = validationResult(req).array();
+  console.log(errors);
+  if (errors.length) {
+    // if there is an error message
+    const alertMessages = errors.map((err) => {
+      return err.msg;
+    });
+    console.log(alertMessages);
+    return res
+      .status(422)
+      .render("auth/login", { alertMessages: alertMessages });
+  }
   User.findOne({ email: email }).then((user) => {
     if (!user) {
       //if user is not found
       console.log("user with this email doesn't exist.");
+      req.flash("alertMessages", "User with this email doesn't exist.")
       return res.redirect("/login");
     }
     bcrypt
@@ -67,6 +81,7 @@ exports.postLogin = (req, res, next) => {
           res.redirect("/");
         } else {
           console.log("password doesn't match");
+          req.flash("alertMessages", "Incorrect password.")
           res.redirect("/login");
         }
       })

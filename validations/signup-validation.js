@@ -18,11 +18,12 @@ const emailValidator = body("email")
     });
   });
 
-const pwdValidator = body("password")
-  .isLength({ min: 6, max: 15 })
-  .withMessage(
-    "Password should contain at least 6 characters and at most 15 characters."
-  );
+const pwdValidator = body(
+  "password",
+  "Password should contain 7-20 numbers and letters, and must not contain spaces, special characters, or emoji."
+)
+  .isLength({ min: 7, max: 20 })
+  .isAlphanumeric();
 
 const confirmPwdValidator = body("confirmPassword").custom((value, { req }) => {
   if (req.body.password !== value) {
