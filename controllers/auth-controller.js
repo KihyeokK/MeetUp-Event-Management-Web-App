@@ -18,33 +18,27 @@ exports.postSignUp = (req, res, next) => {
       return err.msg;
     });
     console.log(alertMessages);
-    return res.status(422).render("auth/signup", { alertMessages: alertMessages });
+    return res
+      .status(422)
+      .render("auth/signup", { alertMessages: alertMessages });
   }
   console.log("signing up,", req.body);
-  User.findOne({ email: email })
-    .then((user) => {
-      //if user with the email already exists.
-      if (user) {
-        req.flash("alertMessage", "User with this E-mail exists already.");
-        return res.redirect("/signup");
-      }
-      return bcrypt
-        .hash(password, 12)
-        .then((hashedPassword) => {
-          const newUser = new User({
-            userName: userName,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: hashedPassword,
-            createdEvents: [],
-            registeredEvents: [],
-          });
-          return newUser.save();
-        })
-        .then((result) => {
-          res.redirect("/");
-        });
+  bcrypt
+    .hash(password, 12)
+    .then((hashedPassword) => {
+      const newUser = new User({
+        userName: userName,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: hashedPassword,
+        createdEvents: [],
+        registeredEvents: [],
+      });
+      return newUser.save();
+    })
+    .then((result) => {
+      res.redirect("/");
     })
     .catch((err) => {
       console.log(err);

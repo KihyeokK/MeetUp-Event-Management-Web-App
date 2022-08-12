@@ -1,18 +1,12 @@
 const express = require("express");
 const authController = require("../controllers/auth-controller");
-const signupVal = require("../validations/signup-validation");
+const signupValidation = require("../validations/signup-validation");
 
 const authRouter = express.Router();
 
 authRouter.get("/signup", authController.getSignUp);
 
-authRouter.post(
-  "/signup",
-  signupVal.emailValidator,
-  signupVal.pwdValidator,
-  signupVal.confirmPwdValidator,
-  authController.postSignUp
-);
+authRouter.post("/signup", signupValidation, authController.postSignUp);
 
 authRouter.get("/login", authController.getLogin);
 
