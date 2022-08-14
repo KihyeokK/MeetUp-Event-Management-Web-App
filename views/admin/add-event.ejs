@@ -1,6 +1,14 @@
 <%- include('../includes/head.ejs') %>
 <body>
     <%- include('../includes/navigation.ejs') %>
+    <% if (alertMessages.length) { %>
+        <% for (let alertMessage of alertMessages) { %>
+            <div class="alert alert-danger alert-dismissible fade show mt-0 mb-0" role="alert">
+                <%= alertMessage %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>    
+    <% } %>
     <div class="container w-75">
         <form class="py-4" action="<% if (!editMode) { %>/admin/create-event<% } else { %>/admin/edit-event/event._id<% } %>" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -9,7 +17,7 @@
                     <label for="eventTitle" class="form-label">Event Title</label>
                     <input type="text" class="form-control" name="title" id="eventTitle" placeholder="Event Title" value="<% if (editMode) { %><%= event.title %><% } %>" required>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="eventOrganizer" class="form-label">Organizer Name</label>
                     <input type="text" class="form-control" name="organizer" id="eventOrganizer" value="<% if (editMode) { %><%= event.organizer %><% } else { %><%= firstName %><% } %>" required>
                 </div>
@@ -23,7 +31,7 @@
                     <label for="eventFormat" class="form-label">Event Format</label>
                     <select class="form-select" name="eventFormat" id="eventFormat" required>
                         <% if (editMode) { %>
-                            <option selected value="<%= event.eventFormat %>"><% if (event.eventFormat === "inPerson" ) { %> In Person <% } else if (event.eventFormat === "online") { %> Online <% } else { %> To be determined <% } %> </option>
+                            <option selected value='<% if (event.eventFormat === "In Person" ) { %>inPerson<% } else if (event.eventFormat === "Online") { %>online<% } else { %>toBeDetermined<% } %>'><%= event.eventFormat %></option>
                         <% } else { %>
                             <option selected disabled value="">Choose Event Format</option>
                         <% } %>
@@ -34,17 +42,21 @@
                 </div>
             </div>
             <div class="row py-2">
-                <div class="col-md-4">
-                    <label for="eventDate" class="mb-2">Date</label>
-                    <input type="date" class="form-control" name="eventDate" id="eventDate" value="<% if (editMode) { %><%= event.eventDate %><% } %>" required>
+                <div class="col-md-3">
+                    <label for="eventStartDate" class="mb-2">Start Date</label>
+                    <input type="date" class="form-control" name="eventStartDate" id="eventStartDate" value="<% if (editMode) { %><%= event.eventStartDate %><% } %>" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="eventStartTime" class="form-label">Start Time</label>
+                    <input type="time" class="form-control" name="startTime" id="eventStartTime" value="<% if (editMode) { %><%= event.startTime %><% } %>" required>
                 </div>
             </div>
             <div class="row g-4 py-2">
                 <div class="col-md-3">
-                    <label for="eventStartTime" class="form-label">Start Time</label>
-                    <input type="time" class="form-control" name="startTime" id="eventStartTime" value="<% if (editMode) { %><%= event.startTime %><% } %>" required>
+                    <label for="eventEndDate" class="mb-2">End Date</label>
+                    <input type="date" class="form-control" name="eventEndDate" id="eventEndDate" value="<% if (editMode) { %><%= event.eventEndDate %><% } %>" required>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="eventEndTime" class="form-label">End Time</label>
                     <input type="time" class="form-control" name="endTime" id="eventEndTime" value="<% if (editMode) { %><%= event.endTime %><% } %>" required>
                 </div>
