@@ -15,7 +15,7 @@
             <div class="row g-4 py-2">
                 <div class="col-md-6">
                     <label for="eventTitle" class="form-label">Event Title</label>
-                    <input type="text" class="form-control" name="title" id="eventTitle" placeholder="Event Title" value="<% if (editMode) { %><%= event.title %><% } %>" required>
+                    <input type="text" class="form-control" name="title" id="eventTitle" placeholder="Event Title" value="<% if (editMode) { %><%= event.title %><% } else { %><%= userInput.title %><% } %>" required>
                 </div>
                 <div class="col-md-6">
                     <label for="eventOrganizer" class="form-label">Organizer Name</label>
@@ -25,13 +25,15 @@
             <div class="row g-4 py-2">
                 <div class="col-md-4">
                     <label for="eventLocation" class="form-label">Location</label>
-                    <input type="text" class="form-control" name="location" id="eventLocation" placeholder="Specify where the event takes place." value="<% if (editMode) { %><%= event.location %><% } %>" required>
+                    <input type="text" class="form-control" name="location" id="eventLocation" placeholder="Specify where the event takes place." value="<% if (editMode) { %><%= event.location %><% } else { %><%= userInput.location %><% } %>" required>
                 </div>
                 <div class="col-md-3">
                     <label for="eventFormat" class="form-label">Event Format</label>
                     <select class="form-select" name="eventFormat" id="eventFormat" required>
                         <% if (editMode) { %>
                             <option selected value='<% if (event.eventFormat === "In Person" ) { %>inPerson<% } else if (event.eventFormat === "Online") { %>online<% } else { %>toBeDetermined<% } %>'><%= event.eventFormat %></option>
+                        <% } else if (userInput.eventFormat) { %>
+                            <option selected value='<% if (userInput.eventFormat === "In Person" ) { %>inPerson<% } else if (userInput.eventFormat === "Online") { %>online<% } else { %>toBeDetermined<% } %>'><%= userInput.eventFormat %></option>
                         <% } else { %>
                             <option selected disabled value="">Choose Event Format</option>
                         <% } %>
@@ -44,21 +46,21 @@
             <div class="row py-2">
                 <div class="col-md-3">
                     <label for="eventStartDate" class="mb-2">Start Date</label>
-                    <input type="date" class="form-control" name="eventStartDate" id="eventStartDate" value="<% if (editMode) { %><%= event.eventStartDate %><% } %>" required>
+                    <input type="date" class="form-control" name="eventStartDate" id="eventStartDate" value="<% if (editMode) { %><%= event.eventStartDate %><% } else if (userInput.eventStartDate) { %><%= userInput.eventStartDate %><% } %>" required>
                 </div>
                 <div class="col-md-2">
                     <label for="eventStartTime" class="form-label">Start Time</label>
-                    <input type="time" class="form-control" name="startTime" id="eventStartTime" value="<% if (editMode) { %><%= event.startTime %><% } %>" required>
+                    <input type="time" class="form-control" name="startTime" id="eventStartTime" value="<% if (editMode) { %><%= event.startTime %><% } else if (userInput.startTime) { %><%= userInput.startTime %><% } %>" required>
                 </div>
             </div>
             <div class="row g-4 py-2">
                 <div class="col-md-3">
                     <label for="eventEndDate" class="mb-2">End Date</label>
-                    <input type="date" class="form-control" name="eventEndDate" id="eventEndDate" value="<% if (editMode) { %><%= event.eventEndDate %><% } %>" required>
+                    <input type="date" class="form-control" name="eventEndDate" id="eventEndDate" value="<% if (editMode) { %><%= event.eventEndDate %><% } else if (userInput.eventEndDate) { %><%= userInput.eventEndDate %><% } %>" required>
                 </div>
                 <div class="col-md-2">
                     <label for="eventEndTime" class="form-label">End Time</label>
-                    <input type="time" class="form-control" name="endTime" id="eventEndTime" value="<% if (editMode) { %><%= event.endTime %><% } %>" required>
+                    <input type="time" class="form-control" name="endTime" id="eventEndTime" value="<% if (editMode) { %><%= event.endTime %><% } else if (userInput.endTime) { %><%= userInput.endTime %><% } %>" required>
                 </div>
             </div>
             <div class="row py-2">
@@ -66,14 +68,14 @@
                     <label for="eventPrice" class="form-label">Event Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" min="0" step="0.01" class="form-control" name="price" id="eventPrice" value="<% if (editMode) { %><%= event.price %><% } %>" required>
+                        <input type="number" min="0" step="0.01" class="form-control" name="price" id="eventPrice" value="<% if (editMode) { %><%= event.price %><% } else if (userInput.price) { %><%= userInput.price %><% } %>" required>
                     </div>
                 </div>
             </div>
             <div class="row py-2">
                 <div class="col-md-6">
                     <label for="description" class="form-label">Description</label>
-                    <textarea name="description" class="form-control" id="description" rows="5" placeholder="Provide a detailed information about your event."><% if (editMode) { %><%= event.description %><% } %></textarea>
+                    <textarea name="description" class="form-control" id="description" rows="5" placeholder="Provide a detailed information about your event."><% if (editMode) { %><%= event.description %><% } else if (userInput.description) { %><%= userInput.description %><% } %></textarea>
                 </div>
             </div>
             <% if (editMode) { %>

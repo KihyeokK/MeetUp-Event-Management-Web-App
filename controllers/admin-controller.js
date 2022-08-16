@@ -9,10 +9,42 @@ exports.getAddEvent = (req, res, next) => {
     editMode: false,
     firstName: req.user.firstName,
     alertMessages: [],
+    userInput: {
+      title: "",
+      organizer: "",
+      location: "",
+      eventFormat: "",
+      eventStartDate: "",
+      eventEndDate: "",
+      startTime: "",
+      endTime: "",
+      price: "",
+      description: "",
+    },
   });
 };
 
 exports.postAddEvent = (req, res, next) => {
+  const {
+    title,
+    organizer,
+    location,
+    eventFormat,
+    eventStartDate,
+    eventEndDate,
+    startTime,
+    endTime,
+    price,
+    description,
+  } = req.body;
+  let correctedEventFormat;
+  if (eventFormat === "inPerson") {
+    correctedEventFormat = "In person";
+  } else if (eventFormat === "online") {
+    correctedEventFormat = "Online";
+  } else if (eventFormat === "toBeDetermined") {
+    correctedEventFormat = "To be determined";
+  }
   const errors = validationResult(req).array();
   console.log(errors);
   if (errors.length) {
@@ -26,29 +58,21 @@ exports.postAddEvent = (req, res, next) => {
       editMode: false,
       firstName: req.user.firstName,
       alertMessages: alertMessages,
+      userInput: {
+        title: title,
+        organizer: organizer,
+        location: location,
+        eventFormat: correctedEventFormat,
+        eventStartDate: eventStartDate,
+        eventEndDate: eventEndDate,
+        startTime: startTime,
+        endTime: endTime,
+        price: price,
+        description: description,
+      },
     });
   }
-  const {
-    title,
-    organizer,
-    location,
-    eventFormat,
-    eventStartDate,
-    eventEndDate,
-    startTime,
-    endTime,
-    price,
-    description,
-  } = req.body;
   const organizerUserId = req.user._id; //_id is automatically generated when creating user.
-  let correctedEventFormat;
-  if (eventFormat === "inPerson") {
-    correctedEventFormat = "In person";
-  } else if (eventFormat === "online") {
-    correctedEventFormat = "Online";
-  } else if (eventFormat === "toBeDetermined") {
-    correctedEventFormat = "To be determined";
-  }
   const event = new Event({
     title: title,
     organizer: organizer,
