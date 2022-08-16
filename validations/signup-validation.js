@@ -3,7 +3,8 @@ const User = require("../models/User");
 
 const userNameValidator = body("userName")
   .isAlphanumeric()
-  .withMessage("Username should only include numbers and alphabets.");
+  .withMessage("Username should only include numbers and alphabets.")
+  .trim();
 
 const emailValidator = body("email")
   .isEmail()
@@ -16,14 +17,16 @@ const emailValidator = body("email")
         return Promise.reject("User with this E-mail already exists.");
       }
     });
-  });
+  })
+  .normalizeEmail();
 
 const pwdValidator = body(
   "password",
   "Password should contain 7-20 numbers and letters, and must not contain spaces, special characters, or emoji."
 )
   .isLength({ min: 7, max: 20 })
-  .isAlphanumeric();
+  .isAlphanumeric()
+  .trim();
 
 const confirmPwdValidator = body("confirmPassword").custom((value, { req }) => {
   if (req.body.password !== value) {

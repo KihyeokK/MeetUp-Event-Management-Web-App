@@ -15,31 +15,31 @@
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="mb-3">
                     <label for="userName" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="userName" name="userName" aria-describedby="userNameHelp" required>
+                    <input type="text" class="form-control" id="userName" name="userName" value="<%= userInput.userName %>" aria-describedby="userNameHelp" required>
                     <div id="userNameHelp" class="form-text">Username should only contain numbers and alphabets.</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        <input type="text" class="form-control" id="firstName" name="firstName" value="<%= userInput.firstName %>" required>
                     </div>
                     <div class="col-md-6">
                         <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" required> 
+                        <input type="text" class="form-control" id="lastName" name="lastName" value="<%= userInput.lastName %>" required> 
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" value="<%= userInput.email %>" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" aria-describedby="pwdHelp" required>
+                    <input type="password" class="form-control" id="password" name="password" value="<%= userInput.password %>" aria-describedby="pwdHelp" required>
                     <div id="pwdHelp" class="form-text">Password should contain 7-20 numbers and letters, and must not contain spaces, special characters, or emoji.</div>
                 </div>
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="<%= userInput.confirmPassword %>" required>
                 </div>
                 <button class="btn btn-primary" type="submit">Sign Up</button>
             </form>

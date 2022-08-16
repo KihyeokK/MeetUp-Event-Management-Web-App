@@ -5,7 +5,18 @@ const User = require("../models/User");
 
 exports.getSignUp = (req, res, next) => {
   alertMessages = req.flash("alertMessage");
-  res.render("auth/signup", { pageTitle: "Signup", alertMessages: alertMessages });
+  res.render("auth/signup", {
+    pageTitle: "Signup",
+    alertMessages: alertMessages,
+    userInput: {
+      userName: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
 };
 
 exports.postSignUp = (req, res, next) => {
@@ -19,9 +30,18 @@ exports.postSignUp = (req, res, next) => {
       return err.msg;
     });
     console.log(alertMessages);
-    return res
-      .status(422)
-      .render("auth/signup", { pageTitle: "Signup", alertMessages: alertMessages });
+    return res.status(422).render("auth/signup", {
+      pageTitle: "Signup",
+      alertMessages: alertMessages,
+      userInput: {
+        userName: userName,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+      },
+    });
   }
   console.log("signing up,", req.body);
   bcrypt
@@ -49,7 +69,12 @@ exports.postSignUp = (req, res, next) => {
 exports.getLogin = (req, res, next) => {
   const infoMessage = req.flash("infoMessage")[0];
   const alertMessages = req.flash("alertMessages");
-  res.render("auth/login", { pageTitle: "Login", infoMessage: infoMessage, alertMessages: alertMessages });
+  res.render("auth/login", {
+    pageTitle: "Login",
+    infoMessage: infoMessage,
+    alertMessages: alertMessages,
+    userInput: { email: "", password: "" },
+  });
 };
 
 exports.postLogin = (req, res, next) => {
@@ -62,16 +87,25 @@ exports.postLogin = (req, res, next) => {
       return err.msg;
     });
     console.log(alertMessages);
-    return res
-      .status(422)
-      .render("auth/login", { pageTitle: "Login", infoMessage: false, alertMessages: alertMessages });
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      infoMessage: false,
+      alertMessages: alertMessages,
+      userInput: { email: email, password: password },
+    });
   }
   User.findOne({ email: email }).then((user) => {
     if (!user) {
       //if user is not found
       console.log("user with this email doesn't exist.");
-      req.flash("alertMessages", "User with this email doesn't exist.")
-      return res.redirect("/login");
+      req.flash("alertMessages", "User with this email doesn't exist.");
+      alertMessages = req.flash("alertMessages");
+      return res.status(422).render("auth/login", {
+        pageTitle: "Login",
+        infoMessage: false,
+        alertMessages: alertMessages,
+        userInput: { email: email, password: password },
+      });
     }
     bcrypt
       .compare(password, user.password)
@@ -83,8 +117,14 @@ exports.postLogin = (req, res, next) => {
           res.redirect("/");
         } else {
           console.log("password doesn't match");
-          req.flash("alertMessages", "Incorrect password.")
-          res.redirect("/login");
+          req.flash("alertMessages", "Incorrect password.");
+          alertMessages = req.flash("alertMessages");
+          return res.status(422).render("auth/login", {
+            pageTitle: "Login",
+            infoMessage: false,
+            alertMessages: alertMessages,
+            userInput: { email: email, password: password },
+          });
         }
       })
       .catch((err) => {
