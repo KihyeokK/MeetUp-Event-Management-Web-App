@@ -16,6 +16,8 @@ exports.getEvents = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -48,6 +50,8 @@ exports.getEventDetails = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -62,6 +66,8 @@ exports.getEventRegister = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -79,6 +85,8 @@ exports.postEventRegister = (req, res, next) => {
       })
       .catch((err) => {
         console.log(err);
+        const error = new Error(err);
+        return next(error);
       });
   } else {
     req.flash("alertMessage", "You are already registered for the event.");
@@ -123,6 +131,8 @@ exports.getMyEvents = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -162,5 +172,7 @@ exports.postSendInvitation = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };

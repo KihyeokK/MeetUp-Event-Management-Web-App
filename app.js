@@ -12,6 +12,7 @@ const User = require("./models/User");
 const eventsRoutes = require("./routes/events");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
+const errorsController = require('./controllers/errors-controller');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -71,6 +72,15 @@ app.use((req, res, next) => {
 app.use(eventsRoutes);
 app.use("/admin", adminRoutes);
 app.use(authRoutes);
+
+app.get('/500error', errorsController.get500error);
+
+// 404 error middlware is executed without any specified route, when none of the middleware functions handled the request before
+app.use(errorsController.get404error);
+// any thrown error will be handled in this middleware
+app.use((err, req, res, next) => {
+  res.redirect('/500error');
+});
 
 mongoose
   .connect(MONGODB_URI)

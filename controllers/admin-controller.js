@@ -101,6 +101,8 @@ exports.postAddEvent = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -118,6 +120,8 @@ exports.getEditEvent = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -185,7 +189,8 @@ exports.postEditEvent = (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -200,7 +205,8 @@ exports.postUnregisterEvent = (req, res, next) => {
       res.redirect("/my-events");
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
@@ -232,6 +238,10 @@ exports.postDeleteEvent = (req, res, next) => {
       .then((result) => {
         req.flash("successMessage", "Successfully deleted the event!");
         res.redirect("/my-events");
+      })
+      .catch((err) => {
+        const error = new Error(err);
+        return next(error);
       });
   });
   // $unset will replace the event with null.

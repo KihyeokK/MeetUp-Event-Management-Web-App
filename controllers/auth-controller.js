@@ -63,6 +63,8 @@ exports.postSignUp = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      return next(error);
     });
 };
 
