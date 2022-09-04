@@ -32,6 +32,8 @@ exports.getEvents = (req, res, next) => {
       res.render("events/events", {
         pageTitle: "Events",
         events: events.reverse(), //feature most recently created events first
+        searchInput: "",
+        searchType: ""
       });
     })
     .catch((err) => {
@@ -51,6 +53,8 @@ exports.getSearchEvents = (req, res, next) => {
         res.render("events/events", {
           pageTitle: "Event Search",
           events: events,
+          searchInput: searchInput,
+          searchType: "by title"
         });
       })
       .catch((err) => {
@@ -64,6 +68,8 @@ exports.getSearchEvents = (req, res, next) => {
         res.render("events/events", {
           pageTitle: "Event Search",
           events: events,
+          searchInput: searchInput,
+          searchType: "by location"
         });
       })
       .catch((err) => {
