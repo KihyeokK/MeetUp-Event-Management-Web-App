@@ -14,7 +14,7 @@
     <% } %>
     <main>
         <div class="container mt-4">
-            <h1>Created Events</h1>
+            <h1>Created Events by @<%= userName %></h1>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <% if (createdEvents.length == 0) { %>
                 <div>There are no events created by this user.</div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <h1 class="mt-4">Registered Events</h1>
+            <h1 class="mt-4">Registered Events by @<%= userName %></h1>
             <% if (registeredEvents.length == 0) { %>
                 <div>There are no events registered by this user.</div>
             <% } %>

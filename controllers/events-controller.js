@@ -184,6 +184,7 @@ exports.getMyEvents = (req, res, next) => {
           registeredEvents: registeredEvents,
           alertMessage: alertMessage,
           successMessage: false,
+          userName: user.userName
         });
       } else {
         console.log("success", successMessage);
@@ -193,6 +194,7 @@ exports.getMyEvents = (req, res, next) => {
           registeredEvents: registeredEvents,
           alertMessage: false,
           successMessage: successMessage,
+          userName: user.userName
         });
       }
     })
