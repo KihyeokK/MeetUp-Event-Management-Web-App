@@ -8,6 +8,10 @@ eventsRouter.get('/', eventsController.getEvents);
 
 eventsRouter.get('/events', eventsController.getEvents);
 
+eventsRouter.get('/search-events', eventsController.getSearchEvents);
+
+eventsRouter.post('/search-events', eventsController.postSearchEvents);
+
 eventsRouter.get('/my-events', isAuthMiddleware, eventsController.getMyEvents);
 
 eventsRouter.post('/send-invitation', isAuthMiddleware, eventsController.postSendInvitation);

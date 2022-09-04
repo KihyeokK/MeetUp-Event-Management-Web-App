@@ -7,6 +7,7 @@ const Event = require("../models/Event");
 const User = require("../models/User");
 
 exports.getEvents = (req, res, next) => {
+  console.log("index");
   Event.find()
     .then((events) => {
       res.render("events/index", {
@@ -19,6 +20,53 @@ exports.getEvents = (req, res, next) => {
       const error = new Error(err);
       return next(error);
     });
+};
+
+exports.getSearchEvents = (req, res, next) => {
+  const searchInput = req.query.searchInput;
+  const searchType = req.query.searchType;
+  console.log("getting search result");
+  if (searchType == "byTitle") {
+    Event.find({ title: searchInput })
+      .then((events) => {
+        res.render("events/index", {
+          pageTitle: "Event Search",
+          events: events,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        const error = new Error(err);
+        return next(error);
+      });
+  } else {
+    Event.find({ location: searchInput })
+      .then((events) => {
+        res.render("events/index", {
+          pageTitle: "Event Search",
+          events: events,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        const error = new Error(err);
+        return next(error);
+      });
+  }
+};
+
+exports.postSearchEvents = (req, res, next) => {
+  // Implements basic search functionality.
+  const searchInput = req.body.searchInput;
+  const searchType = req.body.searchType;
+  console.log(searchInput, searchType);
+  if (!searchInput) {
+    // If there is no input, just redirect to main page.
+    return res.redirect("/");
+  }
+  res.redirect(
+    `/search-events?searchInput=${searchInput}&searchType=${searchType}`
+  );
 };
 
 exports.getEventDetails = (req, res, next) => {
@@ -168,7 +216,7 @@ exports.postSendInvitation = (req, res, next) => {
           console.log("Email sent: " + info.response);
         }
       });
-      res.redirect('/');
+      res.redirect("/");
     })
     .catch((err) => {
       console.log(err);

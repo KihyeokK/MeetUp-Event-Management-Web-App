@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+<nav class="navbar navbar-expand-lg bg-light border-bottom">
     <div class="container">
         <a href="/" class="navbar-brand">MeetUp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,6 +16,15 @@
                     <a href="/admin/create-event" class="nav-link">Create Your Event</a>
                 </li>
             </ul>
+            <form class="d-flex" action="/search-events" method="POST" role="search">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input class="form-control w-75 me-2" name="searchInput" type="search" placeholder="Search Event" aria-label="Search">
+                <select class="form-select w-50 me-2" name="searchType" aria-label="Default select example">
+                    <option selected value="byTitle">By Title</option>
+                    <option value="byLocation">By Location</option>
+                </select>
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
             <ul class="navbar-nav">
                 <% if (!isAuthenticated) { %>
                 <li class="nav-item">
