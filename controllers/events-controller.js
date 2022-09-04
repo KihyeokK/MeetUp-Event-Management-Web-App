@@ -6,13 +6,32 @@ require("dotenv").config();
 const Event = require("../models/Event");
 const User = require("../models/User");
 
-exports.getEvents = (req, res, next) => {
+exports.getIndex = (req, res, next) => {
   console.log("index");
   Event.find()
     .then((events) => {
+      console.log(events.slice(2))
+      // to limit featured events to 3 on landing page, and to feature most recently created events
+      filteredEvents = events.length >= 3 ? events.slice(2).reverse() : events.reverse();
       res.render("events/index", {
+        pageTitle: "Landing Page",
+        events: filteredEvents,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      const error = new Error(err);
+      return next(error);
+    });
+};
+
+exports.getEvents = (req, res, next) => {
+  console.log("events page");
+  Event.find()
+    .then((events) => {
+      res.render("events/events", {
         pageTitle: "Events",
-        events: events,
+        events: events.reverse(), //feature most recently created events first
       });
     })
     .catch((err) => {
@@ -29,7 +48,7 @@ exports.getSearchEvents = (req, res, next) => {
   if (searchType == "byTitle") {
     Event.find({ title: searchInput })
       .then((events) => {
-        res.render("events/index", {
+        res.render("events/events", {
           pageTitle: "Event Search",
           events: events,
         });
@@ -42,7 +61,7 @@ exports.getSearchEvents = (req, res, next) => {
   } else {
     Event.find({ location: searchInput })
       .then((events) => {
-        res.render("events/index", {
+        res.render("events/events", {
           pageTitle: "Event Search",
           events: events,
         });
@@ -62,7 +81,7 @@ exports.postSearchEvents = (req, res, next) => {
   console.log(searchInput, searchType);
   if (!searchInput) {
     // If there is no input, just redirect to main page.
-    return res.redirect("/");
+    return res.redirect("/events");
   }
   res.redirect(
     `/search-events?searchInput=${searchInput}&searchType=${searchType}`

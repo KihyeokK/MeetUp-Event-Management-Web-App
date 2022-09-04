@@ -4,7 +4,7 @@ const isAuthMiddleware = require('../middleware/is-authenticated');
 
 const eventsRouter = express.Router();
 
-eventsRouter.get('/', eventsController.getEvents);
+eventsRouter.get('/', eventsController.getIndex);
 
 eventsRouter.get('/events', eventsController.getEvents);
 
