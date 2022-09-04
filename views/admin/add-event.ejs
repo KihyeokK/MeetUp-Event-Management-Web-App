@@ -23,11 +23,11 @@
                 </div>
             </div>
             <div class="row g-4 py-2">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="eventLocation" class="form-label">Location</label>
                     <input type="text" class="form-control" name="location" id="eventLocation" placeholder="Specify where the event takes place." value="<% if (editMode) { %><%= event.location %><% } else { %><%= userInput.location %><% } %>" required>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="eventFormat" class="form-label">Event Format</label>
                     <select class="form-select" name="eventFormat" id="eventFormat" required>
                         <% if (editMode) { %>
@@ -44,27 +44,27 @@
                 </div>
             </div>
             <div class="row py-2">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="eventStartDate" class="mb-2">Start Date</label>
                     <input type="date" class="form-control" name="eventStartDate" id="eventStartDate" value="<% if (editMode) { %><%= event.eventStartDate %><% } else if (userInput.eventStartDate) { %><%= userInput.eventStartDate %><% } %>" required>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-6">
                     <label for="eventStartTime" class="form-label">Start Time</label>
                     <input type="time" class="form-control" name="startTime" id="eventStartTime" value="<% if (editMode) { %><%= event.startTime %><% } else if (userInput.startTime) { %><%= userInput.startTime %><% } %>" required>
                 </div>
             </div>
             <div class="row g-4 py-2">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="eventEndDate" class="mb-2">End Date</label>
                     <input type="date" class="form-control" name="eventEndDate" id="eventEndDate" value="<% if (editMode) { %><%= event.eventEndDate %><% } else if (userInput.eventEndDate) { %><%= userInput.eventEndDate %><% } %>" required>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-6">
                     <label for="eventEndTime" class="form-label">End Time</label>
                     <input type="time" class="form-control" name="endTime" id="eventEndTime" value="<% if (editMode) { %><%= event.endTime %><% } else if (userInput.endTime) { %><%= userInput.endTime %><% } %>" required>
                 </div>
             </div>
             <div class="row py-2">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="eventPrice" class="form-label">Event Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="row py-2">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="description" class="form-label">Description</label>
                     <textarea name="description" class="form-control" id="description" rows="5" placeholder="Provide a detailed information about your event."><% if (editMode) { %><%= event.description %><% } else if (userInput.description) { %><%= userInput.description %><% } %></textarea>
                 </div>
