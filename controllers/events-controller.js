@@ -10,9 +10,8 @@ exports.getIndex = (req, res, next) => {
   console.log("index");
   Event.find()
     .then((events) => {
-      console.log(events.slice(2))
       // to limit featured events to 3 on landing page, and to feature most recently created events
-      filteredEvents = events.length >= 3 ? events.slice(2).reverse() : events.reverse();
+      filteredEvents = events.length >= 3 ? events.reverse().slice(0, 3) : events.reverse();
       res.render("events/index", {
         pageTitle: "Landing Page",
         events: filteredEvents,
