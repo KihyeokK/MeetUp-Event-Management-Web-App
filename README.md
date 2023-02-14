@@ -1,6 +1,6 @@
 # MeetUp-Event-Management-Web-App
 MeetUp is an event management web app that helps event organizers and friend groups to formally host events in an organized manner.
-This personal project is deployed on Heroku and can be accessed with: https://meetup-event-management-webapp.herokuapp.com (the URL no longer works as Heroku stopped supporting the free plan :( )
+This personal project is deployed on Heroku and can be accessed with: https://meetup-event-management-webapp.herokuapp.com
 
 ## Built with
 * Node.js(Express)
